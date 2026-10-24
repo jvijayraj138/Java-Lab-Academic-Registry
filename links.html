@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Lab Navigation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #101b36;
+    color: #ffffff;
+}
+
+.sidebar {
+    min-height: 100vh;
+    padding: 22px 14px;
+    border-right: 1px solid #293957;
+}
+
+.brand {
+    padding: 8px 10px 22px;
+}
+
+.brand-label {
+    color: #e8c778;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.brand h2 {
+    font-size: 25px;
+    margin-bottom: 6px;
+}
+
+.brand p {
+    color: #aab7d0;
+    font-size: 12px;
+}
+
+.divider {
+    height: 1px;
+    background: #354361;
+    margin: 0 4px 20px;
+}
+
+.section-title {
+    color: #92a2c0;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.4px;
+    padding: 0 10px;
+    margin: 18px 0 10px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 10px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #d5deef;
+    font-size: 13px;
+    border-radius: 9px;
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    background: #223250;
+    color: #e8c778;
+    transform: translateX(3px);
+}
+
+.nav-link.home {
+    background: #293d65;
+    color: #ffffff;
+    margin-bottom: 24px;
+}
+
+.nav-link.home:hover {
+    background: #354c77;
+}
+
+.nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #24314d;
+    color: #e8c778;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.nav-link.home .nav-icon {
+    background: #3a4d72;
+}
+
+.week {
+    margin-left: auto;
+    color: #92a2c0;
+    font-size: 10px;
+}
+
+.footer {
+    margin-top: 26px;
+    padding: 16px 6px 4px;
+    border-top: 1px solid #354361;
+    text-align: center;
+    color: #92a2c0;
+    font-size: 11px;
+    line-height: 1.8;
+}
+</style>
+</head>
+
+<body>
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-label">LEARNING PORTAL</div>
+        <h2>Java Lab</h2>
+        <p>Your practical workspace</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <a class="nav-link home" href="main.html" target="content">
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
+    </a>
+
+    <div class="section-title">PRACTICAL EXPERIMENTS</div>
+
+    <a class="nav-link" href="week1.html" target="content">
+        <span class="nav-icon">01</span>
+        <span>Comparative Study</span>
+        <span class="week">W1</span>
+    </a>
+
+    <a class="nav-link" href="week2.html" target="content">
+        <span class="nav-icon">02</span>
+        <span>Java Installation</span>
+        <span class="week">W2</span>
+    </a>
+
+    <a class="nav-link" href="week3.html" target="content">
+        <span class="nav-icon">03</span>
+        <span>Java Fundamentals</span>
+        <span class="week">W3</span>
+    </a>
+
+    <a class="nav-link" href="week6.html" target="content">
+        <span class="nav-icon">06</span>
+        <span>Java class fundamentals, objects, constructors, and methods</span>
+        <span class="week">W6</span>
+    </a>
+
+    <a class="nav-link" href="week7.html" target="content">
+        <span class="nav-icon">07</span>
+        <span>Strings</span>
+        <span class="week">W7</span>
+    </a>
+
+    <a class="nav-link" href="week8.html" target="content">
+        <span class="nav-icon">08</span>
+        <span>Inheritance</span>
+        <span class="week">W8</span>
+    </a>
+
+    <a class="nav-link" href="week9.html" target="content">
+        <span class="nav-icon">09</span>
+        <span>Packages & Interfaces</span>
+        <span class="week">W9</span>
+    </a>
+
+    <a class="nav-link" href="week10.html" target="content">
+        <span class="nav-icon">10</span>
+        <span>Exception Handling</span>
+        <span class="week">W10</span>
+    </a>
+
+    <a class="nav-link" href="week11.html" target="content">
+        <span class="nav-icon">11</span>
+        <span>Streams & Threads</span>
+        <span class="week">W11</span>
+    </a>
+
+    <a class="nav-link" href="week12.html" target="content">
+        <span class="nav-icon">12</span>
+        <span>Character Streams and Multithreaded Programming</span>
+        <span class="week">W12</span>
+    </a>
+
+    <div class="footer">
+        B.Tech CSE<br>
+        Academic Session 2025–2029
+    </div>
+
+</aside>
+</body>
+</html>

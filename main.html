@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home | Java Lab Academic Registry</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6fa;
+    color: #17233f;
+    padding: 28px;
+}
+
+.welcome {
+    background: linear-gradient(120deg, #101b36, #263f70);
+    color: white;
+    padding: 35px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+}
+
+.welcome .tag {
+    color: #e8c778;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+}
+
+.welcome h1 {
+    font-size: clamp(25px, 4vw, 38px);
+    margin-bottom: 12px;
+}
+
+.welcome p {
+    color: #d6deed;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.section-title {
+    font-size: 23px;
+    margin-bottom: 16px;
+}
+
+.intro {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 28px;
+    border: 1px solid #e1e6ef;
+}
+
+.intro h2 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: #596579;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.card {
+    display: block;
+    text-decoration: none;
+    color: #17233f;
+    background: white;
+    border: 1px solid #e1e6ef;
+    border-radius: 14px;
+    padding: 22px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px #17233f15;
+    border-color: #c5a85c;
+}
+
+.card .number {
+    display: inline-block;
+    background: #edf1fa;
+    color: #3156a3;
+    border-radius: 8px;
+    padding: 8px 11px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 14px;
+}
+
+.card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #687386;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.footer {
+    margin-top: 30px;
+    padding: 18px 0;
+    border-top: 1px solid #dce2ec;
+    text-align: center;
+    color: #758095;
+    font-size: 12px;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 16px;
+    }
+
+    .welcome {
+        padding: 24px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="welcome">
+    <div class="tag">WELCOME TO YOUR LEARNING SPACE</div>
+    <h1>Java Lab Academic Registry</h1>
+    <p>
+        Learn. Practice. Code. Improve.<br>
+        Your personal workspace for Java programming
+        experiments and practical learning.
+    </p>
+</section>
+
+<h2 class="section-title">About Your Lab</h2>
+
+<section class="intro">
+    <h2>Build Your Programming Skills</h2>
+    <p>
+        Welcome to your Java Lab Academic Registry.
+        This website organizes your practical experiments
+        and provides easy access to programs, concepts,
+        and examples covered in your Java laboratory.
+        Select a week below to explore your lab work.
+    </p>
+</section>
+
+<h2 class="section-title">Explore Your Lab Work</h2>
+
+<section class="cards">
+
+    <a class="card" href="week1.html" target="content">
+        <span class="number">WEEK 01</span>
+        <h3>Comparative Study</h3>
+        <p>Explore the features of Java, C, C++,
+        Python and JavaScript.</p>
+    </a>
+
+    <a class="card" href="week2.html" target="content">
+        <span class="number">WEEK 02</span>
+        <h3>Java Installation</h3>
+        <p>Learn about Java and OpenJDK installation.</p>
+    </a>
+
+    <a class="card" href="week3.html" target="content">
+        <span class="number">WEEK 03</span>
+        <h3>Java Fundamentals</h3>
+        <p>Practice basic programs, variables,
+        operators and control statements.</p>
+    </a>
+    
+
+    <a class="card" href="week6.html" target="content">
+        <span class="number">WEEK 06</span>
+        <h3>Java Classes, Objects, Constructors, and Methods</h3>
+        <p>Learn about Java classes, objects, constructors, and methods.</p>
+    </a>
+
+    <a class="card" href="week12.html" target="content">
+        <span class="number">WEEK 12</span>
+        <h3>Character Streams and Multithreaded Programming</h3>
+        <p>Explore character streams and multithreading programs.</p>
+    </a>
+
+
+    <a class="card" href="week7.html" target="content">
+        <span class="number">WEEK 07</span>
+        <h3>Strings and Inheritance Basics</h3>
+        <p>Explore strings, StringBuffer, tokenization
+        and introductory inheritance examples.</p>
+    </a>
+
+    <a class="card" href="week8.html" target="content">
+        <span class="number">WEEK 08</span>
+        <h3>Inheritance</h3>
+        <p>Practice inheritance, method overriding
+        and dynamic method dispatch.</p>
+    </a>
+
+    <a class="card" href="week9.html" target="content">
+        <span class="number">WEEK 09</span>
+        <h3>Packages and Interfaces</h3>
+        <p>Understand packages, interfaces
+        and their implementations.</p>
+    </a>
+
+    <a class="card" href="week10.html" target="content">
+        <span class="number">WEEK 10</span>
+        <h3>Exceptions and Byte Streams</h3>
+        <p>Practice exception handling and
+        byte stream operations.</p>
+    </a>
+
+    <a class="card" href="week11.html" target="content">
+        <span class="number">WEEK 11</span>
+        <h3>Character Streams and Threads</h3>
+        <p>Explore character streams and
+        multithreading programs.</p>
+    </a>
+
+</section>
+
+<footer class="footer">
+    Java Lab Academic Registry | B.Tech CSE | 2025–2029
+</footer>
+
+</body>
+</html>

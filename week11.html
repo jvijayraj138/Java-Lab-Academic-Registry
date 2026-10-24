@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 11 - Character Streams and Multithreading</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    padding: 24px;
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #243047;
+    line-height: 1.6;
+}
+header {
+    background: #243b64;
+    color: white;
+    padding: 26px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+header h1 { margin: 0 0 8px; }
+header p { margin: 0; }
+h2 { color: #243b64; }
+.experiment {
+    background: white;
+    border: 1px solid #dfe5ef;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 10px #15294a0a;
+}
+.number {
+    color: #4266a5;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+pre {
+    background: #172235;
+    color: #edf3ff;
+    padding: 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.output {
+    background: #eef8f1;
+    border-left: 4px solid #39945a;
+    padding: 12px 16px;
+    border-radius: 5px;
+}
+.output pre {
+    background: transparent;
+    color: #21452d;
+    padding: 0;
+    margin: 5px 0 0;
+}
+.note { color: #586579; font-size: 14px; }
+footer { text-align: center; color: #667085; padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>WEEK 11</h1>
+    <h2 style="color:white;">Character Streams and Multithreaded Programming</h2>
+    <p>Java Programming Laboratory</p>
+</header>
+
+<h2>Part A: Character Streams</h2>
+
+<section class="experiment">
+<div class="number">Experiment 1</div>
+<h2>Read Characters Using Reader and Writer</h2>
+<p><b>Aim:</b> To read characters from the keyboard using Reader and display them on the console using Writer.</p>
+<pre><code>import java.io.*;
+
+public class ReaderWriterDemo {
+    public static void main(String[] args) throws IOException {
+        Reader reader = new InputStreamReader(System.in);
+        Writer writer = new OutputStreamWriter(System.out);
+
+        System.out.print("Enter text: ");
+        int ch;
+
+        while ((ch = reader.read()) != '\n' && ch != -1) {
+            writer.write(ch);
+        }
+
+        writer.write('\n');
+        writer.flush();
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Enter text: Hello Java
+Hello Java</pre></div>
+<p class="note">Type a line and press Enter. On some systems, the input may include a carriage return, which is also treated as a line ending.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 2</div>
+<h2>Read a Text File Using FileReader</h2>
+<p><b>Aim:</b> To read the contents of a text file using FileReader and display them on the console.</p>
+<pre><code>import java.io.*;
+
+public class ReadTextFile {
+    public static void main(String[] args) {
+        try (FileReader reader = new FileReader("input.txt")) {
+            int ch;
+
+            while ((ch = reader.read()) != -1) {
+                System.out.print((char) ch);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Hello Java
+Welcome to programming.</pre></div>
+<p class="note">Create input.txt with the two sample lines in the program's working directory.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 3</div>
+<h2>Write Text into a File Using FileWriter</h2>
+<p><b>Aim:</b> To write text into a file using FileWriter.</p>
+<pre><code>import java.io.*;
+
+public class WriteTextFile {
+    public static void main(String[] args) {
+        try (FileWriter writer = new FileWriter("output.txt")) {
+            writer.write("Hello Java\n");
+            writer.write("FileWriter example.");
+            System.out.println("Data written successfully.");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Data written successfully.</pre><p>The output.txt file contains:</p><pre>Hello Java
+FileWriter example.</pre></div>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 4</div>
+<h2>Copy One Text File to Another</h2>
+<p><b>Aim:</b> To copy the contents of one text file into another using FileReader and FileWriter.</p>
+<pre><code>import java.io.*;
+
+public class CopyTextFile {
+    public static void main(String[] args) {
+        try (FileReader reader = new FileReader("source.txt");
+             FileWriter writer = new FileWriter("destination.txt")) {
+
+            char[] buffer = new char[1024];
+            int count;
+
+            while ((count = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, count);
+            }
+
+            System.out.println("File copied successfully.");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>File copied successfully.</pre></div>
+<p class="note">Create source.txt first. Its contents will be copied to destination.txt.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 5</div>
+<h2>Count Characters, Words, and Lines</h2>
+<p><b>Aim:</b> To count the number of characters, words, and lines in a text file using character streams.</p>
+<pre><code>import java.io.*;
+
+public class FileCount {
+    public static void main(String[] args) {
+        int characters = 0;
+        int words = 0;
+        int lines = 0;
+
+        try (BufferedReader reader =
+                 new BufferedReader(new FileReader("input.txt"))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                lines++;
+                characters += line.length();
+
+                String trimmed = line.trim();
+                if (!trimmed.isEmpty()) {
+                    words += trimmed.split("\\s+").length;
+                }
+            }
+
+            System.out.println("Characters: " + characters);
+            System.out.println("Words: " + words);
+            System.out.println("Lines: " + lines);
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Characters: 26
+Words: 5
+Lines: 2</pre></div>
+<p class="note">For this output, input.txt must contain exactly <code>Hello Java</code> on the first line and <code>Welcome to programming.</code> on the second line. The program counts characters excluding line-ending characters.</p>
+</section>
+
+<h2>Part B: Multithreaded Programming</h2>
+
+<section class="experiment">
+<div class="number">Experiment 6</div>
+<h2>Demonstrate the Main Thread</h2>
+<p><b>Aim:</b> To display the main thread's name, priority, and state.</p>
+<pre><code>public class MainThreadDemo {
+    public static void main(String[] args) {
+        Thread t = Thread.currentThread();
+
+        System.out.println("Thread name: " + t.getName());
+        System.out.println("Thread priority: " + t.getPriority());
+        System.out.println("Thread state: " + t.getState());
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Thread name: main
+Thread priority: 5
+Thread state: RUNNABLE</pre></div>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 7</div>
+<h2>Create a Thread by Extending Thread</h2>
+<p><b>Aim:</b> To create a thread by extending the Thread class.</p>
+<pre><code>class MyThread extends Thread {
+    public void run() {
+        System.out.println("Child thread is running");
+    }
+}
+
+public class ThreadClassDemo {
+    public static void main(String[] args) {
+        MyThread t = new MyThread();
+        t.start();
+
+        System.out.println("Main thread is running");
+    }
+}</code></pre>
+<div class="output"><b>Possible Output:</b><pre>Main thread is running
+Child thread is running</pre></div>
+<p class="note">The order of the two messages may vary because the threads execute concurrently.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 8</div>
+<h2>Create a Thread Using Runnable</h2>
+<p><b>Aim:</b> To create a thread by implementing the Runnable interface.</p>
+<pre><code>class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable thread is running");
+    }
+}
+
+public class RunnableDemo {
+    public static void main(String[] args) {
+        MyRunnable task = new MyRunnable();
+        Thread t = new Thread(task);
+        t.start();
+
+        System.out.println("Main method continues");
+    }
+}</code></pre>
+<div class="output"><b>Possible Output:</b><pre>Main method continues
+Runnable thread is running</pre></div>
+<p class="note">The message order may vary between executions.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 9</div>
+<h2>Concurrent Execution of Multiple Threads</h2>
+<p><b>Aim:</b> To create multiple threads and demonstrate their concurrent execution.</p>
+<pre><code>class TaskThread extends Thread {
+    TaskThread(String name) {
+        super(name);
+    }
+
+    public void run() {
+        for (int i = 1; i &lt;= 3; i++) {
+            System.out.println(getName() + ": " + i);
+        }
+    }
+}
+
+public class MultipleThreadsDemo {
+    public static void main(String[] args) {
+        TaskThread t1 = new TaskThread("Thread 1");
+        TaskThread t2 = new TaskThread("Thread 2");
+        TaskThread t3 = new TaskThread("Thread 3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}</code></pre>
+<div class="output"><b>Possible Output:</b><pre>Thread 1: 1
+Thread 2: 1
+Thread 3: 1
+Thread 1: 2
+Thread 3: 2
+Thread 2: 2
+Thread 1: 3
+Thread 2: 3
+Thread 3: 3</pre></div>
+<p class="note">The exact order can vary because the scheduler controls thread execution.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 10</div>
+<h2>Using the isAlive() Method</h2>
+<p><b>Aim:</b> To check whether a thread is running using isAlive().</p>
+<pre><code>class AliveThread extends Thread {
+    public void run() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+
+public class IsAliveDemo {
+    public static void main(String[] args)
+            throws InterruptedException {
+        AliveThread t = new AliveThread();
+
+        System.out.println("Before start: " + t.isAlive());
+
+        t.start();
+        System.out.println("After start: " + t.isAlive());
+
+        t.join();
+        System.out.println("After completion: " + t.isAlive());
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Before start: false
+After start: true
+After completion: false</pre></div>
+<p class="note">The middle result is normally true because the thread sleeps for 500 milliseconds, giving the main thread time to check it.</p>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 11</div>
+<h2>Using the join() Method</h2>
+<p><b>Aim:</b> To make one thread wait for another thread to complete using join().</p>
+<pre><code>class WorkerThread extends Thread {
+    public void run() {
+        for (int i = 1; i &lt;= 3; i++) {
+            System.out.println("Worker: " + i);
+        }
+    }
+}
+
+public class JoinDemo {
+    public static void main(String[] args)
+            throws InterruptedException {
+        WorkerThread t = new WorkerThread();
+        t.start();
+
+        t.join();
+
+        System.out.println("Worker completed");
+        System.out.println("Main thread continues");
+    }
+}</code></pre>
+<div class="output"><b>Sample Output:</b><pre>Worker: 1
+Worker: 2
+Worker: 3
+Worker completed
+Main thread continues</pre></div>
+</section>
+
+<section class="experiment">
+<div class="number">Experiment 12</div>
+<h2>Using isAlive() and join() Together</h2>
+<p><b>Aim:</b> To control thread execution using isAlive() and join().</p>
+<pre><code>class MyWorker extends Thread {
+    public void run() {
+        for (int i = 1; i &lt;= 3; i++) {
+            System.out.println(getName() + ": " + i);
+
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+}
+
+public class AliveJoinDemo {
+    public static void main(String[] args)
+            throws InterruptedException {
+        MyWorker t1 = new MyWorker();
+        MyWorker t2 = new MyWorker();
+
+        t1.setName("Thread 1");
+        t2.setName("Thread 2");
+
+        t1.start();
+        t2.start();
+
+        System.out.println("Thread 1 alive: " + t1.isAlive());
+
+        t1.join();
+        t2.join();
+
+        System.out.println("Thread 1 alive: " + t1.isAlive());
+        System.out.println("Thread 2 alive: " + t2.isAlive());
+        System.out.println("Both threads completed");
+    }
+}</code></pre>
+<div class="output"><b>Possible Output:</b><pre>Thread 1: 1
+Thread 2: 1
+Thread 1 alive: true
+Thread 1: 2
+Thread 2: 2
+Thread 1: 3
+Thread 2: 3
+Thread 1 alive: false
+Thread 2 alive: false
+Both threads completed</pre></div>
+<p class="note">The order of the first messages can vary. The final three messages appear after both threads finish.</p>
+</section>
+
+<footer>
+    <p>Java Programming Laboratory | Week 11</p>
+</footer>
+
+</body>
+</html>

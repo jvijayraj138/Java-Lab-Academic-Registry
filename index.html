@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Lab Academic Registry</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6fa;
+}
+
+.header-frame {
+    display: block;
+    width: 100%;
+    height: 165px;
+    border: none;
+    background: #101b36;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 165px);
+}
+
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    border: none;
+    background: #101b36;
+    min-height: calc(100vh - 165px);
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+    height: calc(100vh - 165px);
+    border: none;
+    background: #f4f6fa;
+}
+
+.mobile-bar {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .header-frame {
+        height: 175px;
+    }
+
+    .mobile-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 14px;
+        background: #101b36;
+        color: white;
+        border-top: 1px solid #354361;
+    }
+
+    .mobile-title {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .menu-button {
+        background: #e8c778;
+        color: #101b36;
+        border: none;
+        padding: 9px 13px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .layout {
+        display: block;
+        min-height: calc(100vh - 225px);
+    }
+
+    .sidebar {
+        display: none;
+        width: 100%;
+        min-height: auto;
+        height: 390px;
+        border-bottom: 2px solid #e8c778;
+    }
+
+    .sidebar.open {
+        display: block;
+    }
+
+    .content {
+        display: block;
+        width: 100%;
+        height: calc(100vh - 225px);
+        min-height: 550px;
+    }
+
+    .content.menu-open {
+        height: 500px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<iframe
+    class="header-frame"
+    src="head.html"
+    title="Student profile and website header">
+</iframe>
+
+<div class="mobile-bar">
+    <span class="mobile-title">Java Lab Navigation</span>
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-expanded="false"
+        aria-controls="sidebar"
+        onclick="toggleMenu()">
+        ☰ Menu
+    </button>
+</div>
+
+<div class="layout">
+    <iframe
+        class="sidebar"
+        id="sidebar"
+        name="sidebar"
+        src="links.html"
+        title="Website navigation">
+    </iframe>
+
+    <iframe
+        class="content"
+        id="content"
+        name="content"
+        src="main.html"
+        title="Main website content">
+    </iframe>
+</div>
+
+<script>
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const button = document.getElementById("menuButton");
+    const content = document.getElementById("content");
+
+    const isOpen = sidebar.classList.toggle("open");
+
+    button.setAttribute("aria-expanded", isOpen);
+    button.textContent = isOpen ? "✕ Close Menu" : "☰ Menu";
+    content.classList.toggle("menu-open", isOpen);
+}
+</script>
+
+</body>
+</html>

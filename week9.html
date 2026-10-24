@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 9 - Packages and Interfaces</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f8f9fa;
+    color: #222;
+    line-height: 1.6;
+}
+h1 {
+    text-align: center;
+    color: #17365d;
+}
+h2 { color: #24527a; }
+h3 { color: #444; }
+.program {
+    background: white;
+    padding: 18px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+pre {
+    background: #f1f3f5;
+    padding: 14px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+.aim { font-weight: bold; }
+.note {
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<h1>WEEK 9 - PACKAGES AND INTERFACES</h1>
+
+<div class="program">
+<h2>Experiment 1: Creating and Using a User-Defined Package</h2>
+<p class="aim">Aim: To create a user-defined package and access its class from another Java program.</p>
+
+<h3>File 1: mypackage/Student.java</h3>
+<pre>
+package mypackage;
+
+public class Student {
+    public String name;
+    public int rollNo;
+
+    public Student(String name, int rollNo) {
+        this.name = name;
+        this.rollNo = rollNo;
+    }
+
+    public void display() {
+        System.out.println("Student Name: " + name);
+        System.out.println("Roll Number: " + rollNo);
+    }
+}
+</pre>
+
+<h3>File 2: Main.java</h3>
+<pre>
+import mypackage.Student;
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student("Ravi", 101);
+        s.display();
+    }
+}
+</pre>
+<strong>Sample Output:</strong>
+<pre>
+Student Name: Ravi
+Roll Number: 101
+</pre>
+<p class="note">Save Student.java inside the mypackage folder. Compile the package class first, then compile and run Main.java from the parent folder.</p>
+</div>
+
+<div class="program">
+<h2>Experiment 2: Importing Packages</h2>
+<p class="aim">Aim: To demonstrate importing a specific class and using a wildcard package import.</p>
+
+<h3>File 1: college/Student.java</h3>
+<pre>
+package college;
+
+public class Student {
+    public void display() {
+        System.out.println("This is the Student class.");
+    }
+}
+</pre>
+
+<h3>File 2: college/Faculty.java</h3>
+<pre>
+package college;
+
+public class Faculty {
+    public void display() {
+        System.out.println("This is the Faculty class.");
+    }
+}
+</pre>
+
+<h3>File 3: SpecificImport.java</h3>
+<pre>
+import college.Student;
+
+public class SpecificImport {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.display();
+    }
+}
+</pre>
+
+<h3>File 4: WildcardImport.java</h3>
+<pre>
+import college.*;
+
+public class WildcardImport {
+    public static void main(String[] args) {
+        Student s = new Student();
+        Faculty f = new Faculty();
+
+        s.display();
+        f.display();
+    }
+}
+</pre>
+<strong>Output of SpecificImport:</strong>
+<pre>
+This is the Student class.
+</pre>
+<strong>Output of WildcardImport:</strong>
+<pre>
+This is the Student class.
+This is the Faculty class.
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 3: Packages and Member Access</h2>
+<p class="aim">Aim: To demonstrate the accessibility of public, private, protected and default members across classes and packages.</p>
+
+<h3>File 1: accessdemo/AccessExample.java</h3>
+<pre>
+package accessdemo;
+
+public class AccessExample {
+    public int publicValue = 10;
+    private int privateValue = 20;
+    protected int protectedValue = 30;
+    int defaultValue = 40;
+
+    public void displayInsideClass() {
+        System.out.println("Public: " + publicValue);
+        System.out.println("Private: " + privateValue);
+        System.out.println("Protected: " + protectedValue);
+        System.out.println("Default: " + defaultValue);
+    }
+}
+</pre>
+
+<h3>File 2: accessdemo/SamePackage.java</h3>
+<pre>
+package accessdemo;
+
+public class SamePackage {
+    public static void main(String[] args) {
+        AccessExample obj = new AccessExample();
+
+        System.out.println("Public: " + obj.publicValue);
+        System.out.println("Protected: " + obj.protectedValue);
+        System.out.println("Default: " + obj.defaultValue);
+
+        // Private members cannot be accessed directly here.
+    }
+}
+</pre>
+
+<h3>File 3: otherpackage/DifferentPackage.java</h3>
+<pre>
+package otherpackage;
+
+import accessdemo.AccessExample;
+
+public class DifferentPackage {
+    public static void main(String[] args) {
+        AccessExample obj = new AccessExample();
+
+        System.out.println("Public: " + obj.publicValue);
+
+        // Private, default and protected members
+        // cannot be accessed directly here.
+    }
+}
+</pre>
+<strong>Output inside AccessExample:</strong>
+<pre>
+Public: 10
+Private: 20
+Protected: 30
+Default: 40
+</pre>
+<strong>Output of SamePackage:</strong>
+<pre>
+Public: 10
+Protected: 30
+Default: 40
+</pre>
+<strong>Output of DifferentPackage:</strong>
+<pre>
+Public: 10
+</pre>
+<p class="note">The examples are separate Java files. A protected member is accessible in a different package through inheritance, subject to Java's access rules.</p>
+</div>
+
+<div class="program">
+<h2>Experiment 4: Demonstrating CLASSPATH</h2>
+<p class="aim">Aim: To demonstrate how Java locates user-defined packages and classes using CLASSPATH.</p>
+
+<h3>File 1: utilities/Calculator.java</h3>
+<pre>
+package utilities;
+
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+</pre>
+
+<h3>File 2: CalculatorMain.java</h3>
+<pre>
+import utilities.Calculator;
+
+public class CalculatorMain {
+    public static void main(String[] args) {
+        Calculator c = new Calculator();
+
+        int result = c.add(10, 20);
+        System.out.println("Sum = " + result);
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Sum = 30
+</pre>
+<h3>Compilation and Execution (Windows)</h3>
+<pre>
+javac -d . utilities/Calculator.java
+javac -cp . CalculatorMain.java
+java -cp . CalculatorMain
+</pre>
+<p class="note">Here, -cp . sets the current directory as the classpath for the command. This demonstrates classpath-based class lookup.</p>
+</div>
+
+<div class="program">
+<h2>Experiment 5: Package Containing Multiple Classes</h2>
+<p class="aim">Aim: To create a bank package containing Account, Customer and Transaction classes.</p>
+
+<h3>File 1: bank/Account.java</h3>
+<pre>
+package bank;
+
+public class Account {
+    public double balance;
+
+    public Account(double balance) {
+        this.balance = balance;
+    }
+
+    public void displayBalance() {
+        System.out.println("Balance: " + balance);
+    }
+}
+</pre>
+
+<h3>File 2: bank/Customer.java</h3>
+<pre>
+package bank;
+
+public class Customer {
+    public String name;
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public void displayCustomer() {
+        System.out.println("Customer: " + name);
+    }
+}
+</pre>
+
+<h3>File 3: bank/Transaction.java</h3>
+<pre>
+package bank;
+
+public class Transaction {
+    public void deposit(Account account, double amount) {
+        account.balance += amount;
+        System.out.println("Deposited: " + amount);
+    }
+}
+</pre>
+
+<h3>File 4: BankMain.java</h3>
+<pre>
+import bank.Account;
+import bank.Customer;
+import bank.Transaction;
+
+public class BankMain {
+    public static void main(String[] args) {
+        Customer customer = new Customer("Anu");
+        Account account = new Account(1000);
+        Transaction transaction = new Transaction();
+
+        customer.displayCustomer();
+        account.displayBalance();
+
+        transaction.deposit(account, 500);
+        account.displayBalance();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Customer: Anu
+Balance: 1000.0
+Deposited: 500.0
+Balance: 1500.0
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 6: Defining and Implementing an Interface</h2>
+<p class="aim">Aim: To create a Shape interface and implement it using Circle and Rectangle classes.</p>
+<pre>
+interface Shape {
+    double area();
+}
+
+class Circle implements Shape {
+    double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle implements Shape {
+    double length, breadth;
+
+    Rectangle(double length, double breadth) {
+        this.length = length;
+        this.breadth = breadth;
+    }
+
+    public double area() {
+        return length * breadth;
+    }
+}
+
+public class ShapeDemo {
+    public static void main(String[] args) {
+        Shape c = new Circle(5);
+        Shape r = new Rectangle(4, 6);
+
+        System.out.printf("Circle Area: %.2f%n", c.area());
+        System.out.println("Rectangle Area: " + r.area());
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Circle Area: 78.54
+Rectangle Area: 24.0
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 7: Implementing Multiple Interfaces</h2>
+<p class="aim">Aim: To demonstrate how one class can implement multiple interfaces.</p>
+<pre>
+interface Printable {
+    void print();
+}
+
+interface Showable {
+    void show();
+}
+
+class Demo implements Printable, Showable {
+    public void print() {
+        System.out.println("Printing...");
+    }
+
+    public void show() {
+        System.out.println("Showing...");
+    }
+}
+
+public class MultipleInterfacesDemo {
+    public static void main(String[] args) {
+        Demo d = new Demo();
+        d.print();
+        d.show();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Printing...
+Showing...
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 8: Interface-Based Polymorphism</h2>
+<p class="aim">Aim: To demonstrate polymorphism using a Vehicle interface reference.</p>
+<pre>
+interface Vehicle {
+    void start();
+}
+
+class Car implements Vehicle {
+    public void start() {
+        System.out.println("Car starts with a key.");
+    }
+}
+
+class Bike implements Vehicle {
+    public void start() {
+        System.out.println("Bike starts with a button.");
+    }
+}
+
+public class VehicleDemo {
+    public static void main(String[] args) {
+        Vehicle v;
+
+        v = new Car();
+        v.start();
+
+        v = new Bike();
+        v.start();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Car starts with a key.
+Bike starts with a button.
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 9: Variables in Interfaces</h2>
+<p class="aim">Aim: To demonstrate that variables declared in an interface are constants.</p>
+<pre>
+interface Constants {
+    int MAX_MARKS = 100;
+    double PI = 3.14159;
+}
+
+public class InterfaceVariablesDemo implements Constants {
+    public static void main(String[] args) {
+        System.out.println("Maximum Marks: "
+                           + Constants.MAX_MARKS);
+        System.out.println("PI: " + Constants.PI);
+
+        // Constants.MAX_MARKS = 200; // Not allowed
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Maximum Marks: 100
+PI: 3.14159
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 10: Nested Interfaces</h2>
+<p class="aim">Aim: To demonstrate a nested interface declared inside an outer class.</p>
+<pre>
+class University {
+    interface Department {
+        void displayDepartment();
+    }
+}
+
+class CSEDepartment implements University.Department {
+    public void displayDepartment() {
+        System.out.println("Computer Science Department");
+    }
+}
+
+public class NestedInterfaceDemo {
+    public static void main(String[] args) {
+        University.Department d = new CSEDepartment();
+        d.displayDepartment();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Computer Science Department
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 11: Interface Inheritance</h2>
+<p class="aim">Aim: To demonstrate inheritance between interfaces using Animal and Dog.</p>
+<pre>
+interface Animal {
+    void eat();
+}
+
+interface Dog extends Animal {
+    void bark();
+}
+
+class Labrador implements Dog {
+    public void eat() {
+        System.out.println("Labrador eats food.");
+    }
+
+    public void bark() {
+        System.out.println("Labrador barks.");
+    }
+}
+
+public class InterfaceInheritanceDemo {
+    public static void main(String[] args) {
+        Labrador dog = new Labrador();
+        dog.eat();
+        dog.bark();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Labrador eats food.
+Labrador barks.
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 12: Payment Processing System Using Interfaces</h2>
+<p class="aim">Aim: To develop a payment processing system using an interface and multiple implementations.</p>
+<pre>
+import java.util.Scanner;
+
+interface Payment {
+    void pay(double amount);
+}
+
+class CreditCardPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println(
+            "Paid Rs. " + amount + " using Credit Card."
+        );
+    }
+}
+
+class UPIPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println(
+            "Paid Rs. " + amount + " using UPI."
+        );
+    }
+}
+
+class NetBankingPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println(
+            "Paid Rs. " + amount + " using Net Banking."
+        );
+    }
+}
+
+public class PaymentDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1. Credit Card");
+        System.out.println("2. UPI");
+        System.out.println("3. Net Banking");
+
+        System.out.print("Choose payment method: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        double amount = sc.nextDouble();
+
+        Payment payment;
+
+        switch (choice) {
+            case 1:
+                payment = new CreditCardPayment();
+                break;
+            case 2:
+                payment = new UPIPayment();
+                break;
+            case 3:
+                payment = new NetBankingPayment();
+                break;
+            default:
+                System.out.println("Invalid payment method.");
+                sc.close();
+                return;
+        }
+
+        payment.pay(amount);
+        sc.close();
+    }
+}
+</pre>
+<strong>Sample Output:</strong>
+<pre>
+1. Credit Card
+2. UPI
+3. Net Banking
+Choose payment method: 2
+Enter amount: 1500
+Paid Rs. 1500.0 using UPI.
+</pre>
+</div>
+
+</body>
+</html>

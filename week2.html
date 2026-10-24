@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Week 2 - Java Installation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fb;
+            color: #263238;
+            padding: 25px;
+            line-height: 1.7;
+        }
+
+        h1, h2 {
+            color: #173b70;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .section {
+            background: white;
+            padding: 18px;
+            margin: 18px 0;
+            border-radius: 10px;
+            border-left: 5px solid #315da8;
+        }
+
+        code {
+            background: #eaf1fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .note {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Week 2: Installation of Java</h1>
+
+    <p>
+        <b>Aim:</b> To install Java Development Kit (JDK),
+        configure Java on Windows, and execute a simple Java program.
+    </p>
+
+    <div class="section">
+        <h2>Part A: Installing Oracle JDK</h2>
+
+        <h3>Step 1: Download Java JDK</h3>
+        <p>Open a web browser and visit the official Oracle JDK website.
+        Download the appropriate JDK installer for Windows.</p>
+        <p>
+            <a href="https://www.oracle.com/java/technologies/downloads/"
+               target="_blank">Download Oracle JDK</a>
+        </p>
+
+        <h3>Step 2: Install JDK</h3>
+        <ol>
+            <li>Double-click the downloaded .exe file.</li>
+            <li>Click Next and follow the installation wizard.</li>
+            <li>Complete the installation.</li>
+        </ol>
+
+        <h3>Step 3: Verify Java Installation</h3>
+        <p>Open Command Prompt and enter:</p>
+        <p><code>java --version</code></p>
+        <p>To check the Java compiler, enter:</p>
+        <p><code>javac --version</code></p>
+    </div>
+
+    <div class="section">
+        <h2>Part B: Configuring Java on Windows</h2>
+
+        <h3>Step 1: Find the JDK Installation Path</h3>
+        <p>Locate the folder where the JDK was installed.</p>
+        <p>Example: <code>C:\Program Files\Java\jdk-25</code></p>
+
+        <h3>Step 2: Set JAVA_HOME</h3>
+        <ol>
+            <li>Press Windows + R.</li>
+            <li>Type <code>sysdm.cpl</code> and press Enter.</li>
+            <li>Select the Advanced tab.</li>
+            <li>Click Environment Variables.</li>
+            <li>Create a system variable named JAVA_HOME.</li>
+            <li>Set its value to your actual JDK installation folder.</li>
+        </ol>
+
+        <h3>Step 3: Update the PATH Variable</h3>
+        <ol>
+            <li>Under System Variables, select Path and click Edit.</li>
+            <li>Add a new entry: <code>%JAVA_HOME%\bin</code></li>
+            <li>Click OK to save the changes.</li>
+        </ol>
+
+        <h3>Step 4: Verify Configuration</h3>
+        <p>Open a new Command Prompt and run:</p>
+        <p><code>echo %JAVA_HOME%</code></p>
+        <p><code>java --version</code></p>
+        <p><code>javac --version</code></p>
+    </div>
+
+    <div class="section">
+        <h2>Part C: Installing OpenJDK</h2>
+
+        <ol>
+            <li>Open a web browser and visit the OpenJDK website.</li>
+            <li>Download the Windows x86 64-bit JDK 21.0.11 MSI installer, as specified in the lab material.</li>
+            <li>Run the installer and complete the installation.</li>
+            <li>Open Command Prompt and check the Java version.</li>
+            <li>Update the installation path if required.</li>
+            <li>Write and run a simple Java program.</li>
+        </ol>
+
+        <p>
+            <a href="https://jdk.java.net/"
+               target="_blank">OpenJDK Downloads</a>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Part D: Hello World Program</h2>
+
+        <p>Create a file named <b>HelloWorld.java</b> and enter:</p>
+
+        <pre><code>class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+
+        <p>Compile the program using:</p>
+        <p><code>javac HelloWorld.java</code></p>
+
+        <p>Run the program using:</p>
+        <p><code>java HelloWorld</code></p>
+
+        <h3>Expected Output</h3>
+        <pre><code>Hello, World!</code></pre>
+    </div>
+
+    <p class="note">
+        Note: The exact version number and installation path depend on
+        the JDK version installed on your computer.
+    </p>
+
+    <p style="text-align:center;">
+        Java Lab Academic Registry | Week 2
+    </p>
+
+</body>
+</html>

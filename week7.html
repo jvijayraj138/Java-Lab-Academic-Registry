@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Week 7 - Java Lab Programs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f8f9fa;
+            color: #222;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #17365d;
+        }
+        .program {
+            background: white;
+            padding: 18px;
+            margin-bottom: 25px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        h2 { color: #24527a; }
+        pre {
+            background: #f1f3f5;
+            padding: 14px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .aim { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>WEEK 7 - JAVA LAB PROGRAMS</h1>
+
+<div class="program">
+<h2>Experiment 1: String Constructors</h2>
+<p class="aim">Aim: To demonstrate different ways of creating and initializing String objects.</p>
+<pre>
+class StringConstructors {
+    public static void main(String[] args) {
+        String s1 = "Java Programming";
+        String s2 = new String("Object Oriented");
+
+        char[] chars = {'C', 'o', 'd', 'i', 'n', 'g'};
+        String s3 = new String(chars);
+
+        byte[] bytes = {72, 101, 108, 108, 111};
+        String s4 = new String(bytes);
+
+        System.out.println("String using literal: " + s1);
+        System.out.println("String using new String(): " + s2);
+        System.out.println("String from character array: " + s3);
+        System.out.println("String from byte array: " + s4);
+
+        String s5 = "Java";
+        String s6 = new String("Java");
+
+        System.out.println("\\nLiteral and new String comparison:");
+        System.out.println("Using == : " + (s5 == s6));
+        System.out.println("Using equals() : " + s5.equals(s6));
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+String using literal: Java Programming
+String using new String(): Object Oriented
+String from character array: Coding
+String from byte array: Hello
+
+Literal and new String comparison:
+Using == : false
+Using equals() : true
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 2: StringBuffer Class</h2>
+<p class="aim">Aim: To demonstrate mutable string operations using the StringBuffer class.</p>
+<pre>
+class StringBufferDemo {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer("Core Java");
+
+        System.out.println("Initial String: " + sb);
+
+        sb.append(" Lab");
+        System.out.println("After append: " + sb);
+
+        sb.insert(5, "Advanced ");
+        System.out.println("After insert: " + sb);
+
+        sb.replace(0, 4, "Java");
+        System.out.println("After replace: " + sb);
+
+        sb.delete(5, 14);
+        System.out.println("After delete: " + sb);
+
+        sb.reverse();
+        System.out.println("After reverse: " + sb);
+
+        System.out.println("Length: " + sb.length());
+        System.out.println("Capacity: " + sb.capacity());
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Initial String: Core Java
+After append: Core Java Lab
+After insert: Core Advanced Java Lab
+After replace: Java Advanced Java Lab
+After delete: Javaava Lab
+After reverse: baL avaavaJ
+Length: 11
+Capacity: 25
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 3: StringTokenizer Class</h2>
+<p class="aim">Aim: To split a sentence into tokens and display the tokens using default and user-specified delimiters.</p>
+<pre>
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+class StringTokenizerDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a sentence: ");
+        String sentence = sc.nextLine();
+
+        StringTokenizer st = new StringTokenizer(sentence);
+        int count = 0;
+
+        System.out.println("\\nTokens:");
+        while (st.hasMoreTokens()) {
+            System.out.println(st.nextToken());
+            count++;
+        }
+
+        System.out.println("Total number of tokens: " + count);
+
+        System.out.print("\\nEnter a delimiter: ");
+        String delimiter = sc.nextLine();
+
+        StringTokenizer st2 = new StringTokenizer(sentence, delimiter);
+
+        System.out.println("\\nTokens using delimiter '" + delimiter + "':");
+
+        int count2 = 0;
+        while (st2.hasMoreTokens()) {
+            System.out.println(st2.nextToken());
+            count2++;
+        }
+
+        System.out.println("Total tokens: " + count2);
+        sc.close();
+    }
+}
+</pre>
+<strong>Sample Output:</strong>
+<pre>
+Enter a sentence: Java is easy to learn
+
+Tokens:
+Java
+is
+easy
+to
+learn
+Total number of tokens: 5
+
+Enter a delimiter: a
+
+Tokens using delimiter 'a':
+J
+v
+ is e
+sy to le
+rn
+Total tokens: 5
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 4: Basic Inheritance</h2>
+<p class="aim">Aim: To demonstrate single inheritance using a Person superclass and a Student subclass.</p>
+<pre>
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void displayPerson() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+class Student extends Person {
+    int rollNo;
+    String branch;
+
+    Student(String name, int age, int rollNo, String branch) {
+        super(name, age);
+        this.rollNo = rollNo;
+        this.branch = branch;
+    }
+
+    void displayStudent() {
+        displayPerson();
+        System.out.println("Roll Number: " + rollNo);
+        System.out.println("Branch: " + branch);
+    }
+
+    public static void main(String[] args) {
+        Student s = new Student(
+            "Sneha", 19, 327, "Information Technology"
+        );
+
+        System.out.println("Student Details");
+        System.out.println("----------------");
+        s.displayStudent();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Student Details
+----------------
+Name: Sneha
+Age: 19
+Roll Number: 327
+Branch: Information Technology
+</pre>
+</div>
+
+<div class="program">
+<h2>Experiment 5: Using the super Keyword</h2>
+<p class="aim">Aim: To demonstrate how super accesses superclass variables, methods, and constructors.</p>
+<pre>
+class Employee {
+    String name;
+    double salary;
+
+    Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    void displayDetails() {
+        System.out.println("Employee Name: " + name);
+        System.out.println("Salary: " + salary);
+    }
+}
+
+class Manager extends Employee {
+    String department;
+
+    Manager(String name, double salary, String department) {
+        super(name, salary);
+        this.department = department;
+    }
+
+    void displayDetails() {
+        System.out.println("Manager Details");
+        System.out.println("----------------");
+
+        System.out.println("Name using super: " + super.name);
+        super.displayDetails();
+
+        System.out.println("Department: " + department);
+    }
+
+    public static void main(String[] args) {
+        Manager m = new Manager(
+            "Arjun", 68500.50, "Finance"
+        );
+
+        m.displayDetails();
+    }
+}
+</pre>
+<strong>Output:</strong>
+<pre>
+Manager Details
+----------------
+Name using super: Arjun
+Employee Name: Arjun
+Salary: 68500.5
+Department: Finance
+</pre>
+</div>
+
+</body>
+</html>
